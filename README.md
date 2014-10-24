@@ -46,7 +46,12 @@ The `mapper` function transforms a `dict`, and the `reducer` function
 receives a file pointer to write to and an iterator over the results
 from `mapper`.
 
-To run this, invoke `runmapper.py` and `runreducer.py` from this
-repository. When executed, they will import and execute your `mapper`
-and `reducer`. The output written to `fp` by `reducer` is the result
-of the computation.
+You execute the scripts with:
+
+```bash
+$ ./easymr.py mapper.py reducer.py 'swift://~/data/*.txt'
+```
+
+This will create a zapp, deploy it on ZeroCloud, execute it on the
+Swift inputs given, and finally clean up the whole thing. The result
+(the data written to `fp` above) is shown in your terminal.
