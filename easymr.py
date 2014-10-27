@@ -71,8 +71,8 @@ def main(argv):
     call('zpm', 'new', root)
 
     instroot = os.path.dirname(__file__)
-    shutil.copy(args.mapper, root)
-    shutil.copy(args.reducer, root)
+    shutil.copyfile(args.mapper, os.path.join(root, 'mapper.py'))
+    shutil.copyfile(args.reducer, os.path.join(root, 'reducer.py'))
     shutil.copy(os.path.join(instroot, 'runmapper.py'), root)
     shutil.copy(os.path.join(instroot, 'runreducer.py'), root)
 
