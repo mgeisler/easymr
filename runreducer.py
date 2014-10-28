@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 
 import reducer
@@ -11,5 +12,4 @@ def load():
             yield json.load(fp)
 
 if __name__ == '__main__':
-    with open('/dev/stdout', 'a') as fp:
-        reducer.reducer(fp, load())
+    reducer.reducer(sys.stdout, load())
