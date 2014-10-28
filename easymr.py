@@ -74,15 +74,15 @@ def main(argv):
     zapp_path = os.path.join(root, 'zapp.yaml')
     zapp = yaml.load(open(zapp_path))
     groups = [{'name': 'mapper',
-               'path': 'file://python:python',
+               'path': 'file://python2.7:python',
                'args': 'runner.py map',
-               'devices': [{'name': 'python'},
+               'devices': [{'name': 'python2.7'},
                            {'name': 'input', 'path': args.inputs}],
                'connect': ['reducer']},
               {'name': 'reducer',
-               'path': 'file://python:python',
+               'path': 'file://python2.7:python',
                'args': 'runner.py reduce',
-               'devices': [{'name': 'python'},
+               'devices': [{'name': 'python2.7'},
                            {'name': 'stdout'}]}]
     zapp['meta']['name'] = 'mr'
     zapp['execution']['groups'] = groups
