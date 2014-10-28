@@ -3,8 +3,7 @@ import sys
 import json
 import traceback
 
-import mapper
-import reducer
+import job
 
 
 def runmapper():
@@ -15,7 +14,7 @@ def runmapper():
         record = json.loads(data)
     except:
         record = {'data': data}
-    mapped = mapper.mapper(record)
+    mapped = job.mapper(record)
     with open('/dev/out/reducer', 'a') as fp:
         json.dump(mapped, fp)
 
@@ -29,7 +28,7 @@ def runreducer():
             with open(os.path.join(mappers, mapper)) as fp:
                 yield json.load(fp)
 
-    reducer.reducer(sys.stdout, load())
+    job.reducer(sys.stdout, load())
 
 
 if __name__ == '__main__':

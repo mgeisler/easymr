@@ -53,15 +53,12 @@ def output(*msgs):
 def main(argv):
     desc = "Run a ZeroCloud map-reduce job"
     parser = argparse.ArgumentParser(argv, description=desc)
-    parser.add_argument('mapper', metavar='MAPPER', help='the mapper')
-    parser.add_argument('reducer', metavar='REDUCER', help='the reducer')
+    parser.add_argument('job', metavar='JOB', help='the job script')
     parser.add_argument('inputs', metavar='INPUTS', help='input objects')
     args = parser.parse_args()
 
-    if not os.path.exists(args.mapper):
-        parser.error('could not find %s' % args.mapper)
-    if not os.path.exists(args.reducer):
-        parser.error('count not find %s' % args.reducer)
+    if not os.path.exists(args.job):
+        parser.error('could not find %s' % args.job)
 
     root = tempfile.mkdtemp()
     atexit.register(shutil.rmtree, root)
@@ -71,8 +68,7 @@ def main(argv):
     call('zpm', 'new', root)
 
     instroot = os.path.dirname(__file__)
-    shutil.copyfile(args.mapper, os.path.join(root, 'mapper.py'))
-    shutil.copyfile(args.reducer, os.path.join(root, 'reducer.py'))
+    shutil.copyfile(args.job, os.path.join(root, 'job.py'))
     shutil.copy(os.path.join(instroot, 'runner.py'), root)
 
     zapp_path = os.path.join(root, 'zapp.yaml')

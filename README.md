@@ -9,10 +9,12 @@ reducers, you take care of the mapping and reducing logic only.
 Word Count Example
 ------------------
 
-To do a simple word count, you write a `mapper.py` with:
+To do a simple word count, you write a `job.py` file with a `mapper`
+and a `reducer` function:
 
 ```python
 import os
+import math
 
 def mapper(record):
     path = os.environ['LOCAL_PATH_INFO']
@@ -21,12 +23,6 @@ def mapper(record):
 
     return {'path': basename,
             'count': len(data.split())}
-```
-
-and a `reducer.py` with:
-
-```python
-import math
 
 def reducer(fp, entries):
     counts = []
@@ -49,7 +45,7 @@ from `mapper`.
 You execute the scripts with:
 
 ```bash
-$ ./easymr.py mapper.py reducer.py 'swift://~/data/*.txt'
+$ ./easymr.py job.py 'swift://~/data/*.txt'
 ```
 
 This will create a zapp, deploy it on ZeroCloud, execute it on the
