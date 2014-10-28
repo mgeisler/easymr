@@ -92,7 +92,7 @@ def main(argv):
     os.chdir(root)
     call('zpm', 'bundle')
 
-    container = 'mr-%d' % random.randrange(1000000)
+    container = 'easymr-tmp-%d' % random.randrange(1000000)
 
     output('deploying to', container)
     call('zpm', 'deploy', container, 'mr.zapp')
