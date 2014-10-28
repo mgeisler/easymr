@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import traceback
 
 import reducer
 
@@ -12,4 +13,7 @@ def load():
             yield json.load(fp)
 
 if __name__ == '__main__':
-    reducer.reducer(sys.stdout, load())
+    try:
+        reducer.reducer(sys.stdout, load())
+    except Exception, e:
+        traceback.print_exc(file=sys.stdout)
