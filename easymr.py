@@ -73,20 +73,19 @@ def main(argv):
     instroot = os.path.dirname(__file__)
     shutil.copyfile(args.mapper, os.path.join(root, 'mapper.py'))
     shutil.copyfile(args.reducer, os.path.join(root, 'reducer.py'))
-    shutil.copy(os.path.join(instroot, 'runmapper.py'), root)
-    shutil.copy(os.path.join(instroot, 'runreducer.py'), root)
+    shutil.copy(os.path.join(instroot, 'runner.py'), root)
 
     zapp_path = os.path.join(root, 'zapp.yaml')
     zapp = yaml.load(open(zapp_path))
     groups = [{'name': 'mapper',
                'path': 'file://python:python',
-               'args': 'runmapper.py',
+               'args': 'runner.py map',
                'devices': [{'name': 'python'},
                            {'name': 'input', 'path': args.inputs}],
                'connect': ['reducer']},
               {'name': 'reducer',
                'path': 'file://python:python',
-               'args': 'runreducer.py',
+               'args': 'runner.py reduce',
                'devices': [{'name': 'python'},
                            {'name': 'stdout'}]}]
     zapp['meta']['name'] = 'mr'
