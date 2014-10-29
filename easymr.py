@@ -28,7 +28,7 @@ import subprocess
 def call(*args, **kwargs):
     verbose = kwargs.pop('verbose', False)
     kwargs['stdout'] = subprocess.PIPE
-    kwargs['stderr'] = subprocess.STDOUT
+    kwargs['stderr'] = subprocess.PIPE
 
     try:
         proc = subprocess.Popen(args, **kwargs)
@@ -40,6 +40,7 @@ def call(*args, **kwargs):
     if proc.returncode != 0:
         print '*** executing %s failed:' % args[0]
         print stdout
+        print stderr
         sys.exit(1)
     if verbose:
         print stdout
