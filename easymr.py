@@ -109,3 +109,4 @@ if __name__ == '__main__':
         sys.exit(main(sys.argv))
     except KeyboardInterrupt:
         output('interrupted!')
+        sys.exit(1)
