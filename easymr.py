@@ -26,7 +26,6 @@ import subprocess
 
 
 def call(*args, **kwargs):
-    verbose = kwargs.pop('verbose', False)
     kwargs['stdout'] = subprocess.PIPE
     kwargs['stderr'] = subprocess.PIPE
 
@@ -42,8 +41,7 @@ def call(*args, **kwargs):
         print stdout
         print stderr
         sys.exit(1)
-    if verbose:
-        print stdout
+    return stdout
 
 
 def main(argv):
@@ -96,8 +94,8 @@ def main(argv):
     atexit.register(sys.stdout.write, 'cleaning up temp container\n')
 
     print 'executing job'
-    call('zpm', 'execute', '--container', container, 'mr.zapp',
-         verbose=True)
+    stdout = call('zpm', 'execute', '--container', container, 'mr.zapp')
+    sys.stdout.write(stdout)
 
 
 if __name__ == '__main__':
