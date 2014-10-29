@@ -46,11 +46,6 @@ def call(*args, **kwargs):
         print stdout
 
 
-def output(*msgs):
-    msg = ' '.join(map(str, msgs))
-    print msg
-
-
 def main(argv):
     desc = "Run a ZeroCloud map-reduce job"
     parser = argparse.ArgumentParser(argv, description=desc)
@@ -63,9 +58,9 @@ def main(argv):
 
     root = tempfile.mkdtemp()
     atexit.register(shutil.rmtree, root)
-    atexit.register(output, 'cleaning up temp directory')
+    atexit.register(sys.stdout.write, 'cleaning up temp directory\n')
 
-    output('creating wrapper zapp in', root)
+    print 'creating wrapper zapp in', root
     call('zpm', 'new', root)
 
     instroot = os.path.dirname(__file__)
@@ -95,12 +90,12 @@ def main(argv):
 
     container = 'easymr-tmp-%08d' % random.randrange(100000000)
 
-    output('deploying to', container)
+    print 'deploying to', container
     call('zpm', 'deploy', container, 'mr.zapp')
     atexit.register(call, 'swift', 'delete', container)
-    atexit.register(output, 'cleaning up temp container')
+    atexit.register(sys.stdout.write, 'cleaning up temp container\n')
 
-    output('executing job')
+    print 'executing job'
     call('zpm', 'execute', '--container', container, 'mr.zapp',
          verbose=True)
 
@@ -109,5 +104,5 @@ if __name__ == '__main__':
     try:
         sys.exit(main(sys.argv))
     except KeyboardInterrupt:
-        output('interrupted!')
+        print 'interrupted!'
         sys.exit(1)
